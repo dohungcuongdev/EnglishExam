@@ -35,6 +35,6 @@ public class ReadingDAOImpl implements ReadingDAO {
 	public List<Readinganswer> getReadingAnswer(int no) {
 		Query q = sessionFactory.getCurrentSession().createQuery("from readinganswer where no = :no order by question"); 
 		q.setParameter("no", no);
-		return (List<Readinganswer>) q.list();
+		return (List<Readinganswer>) q.list();	
 	}
 }

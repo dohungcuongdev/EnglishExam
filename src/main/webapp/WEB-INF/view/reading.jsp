@@ -8,7 +8,7 @@
 			<div class="fix main_content_container">
 				<div class="fix single_content_latest_post floatleft">
 					<div class="single_page_content">
-					<form action="${pageContext.request.contextPath}/readingscore.html" id="myform" method="post">
+					<form action="${pageContext.request.contextPath}/listeningscore.html" id="myform" method="post">
 						<h1>Speaking</h1>
 						<p class="post_meta fix">
 						<h1>${speakingTopic}</h1>

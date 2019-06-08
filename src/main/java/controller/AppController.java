@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import daos.ListeningDAO;
 import daos.ReadingDAO;
 import daos.SpeakingDAO;
 import daos.UserDAO;
@@ -28,6 +29,8 @@ import daos.WritingDAO;
 import helper.Authentication;
 import helper.Logger;
 import models.AppVars;
+import models.ListeningResult;
+import models.Listeninganswer;
 import models.Reading;
 import models.Readinganswer;
 import models.Speaking;
@@ -44,7 +47,10 @@ public class AppController {
 
 	@Autowired
 	private WritingDAO writingDAO;
-
+	
+	@Autowired
+	private ListeningDAO listeningDAO;
+	
 	@Autowired
 	private SpeakingDAO speakingDAO;
 
@@ -205,6 +211,28 @@ public class AppController {
 		request.setAttribute("results", results);
 		model.put("studentResult", score);
 		return "readingscore";
+	}
+	@RequestMapping(value = "listeningscore", method = RequestMethod.POST)
+	public String listeningscore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_listeningscore");
+		List<ListeningResult> listeningResults = new ArrayList<ListeningResult>(); // list contains 40 listening result
+		List<Listeninganswer> listcorrectAnswser = listeningDAO.getListeningAnswer(1); // get 40 answers from db where listening no = 1
+		int score = 0;
+		for(int i = 0; i < listcorrectAnswser.size(); i++) {
+			String studentAnswer = request.getParameter("Q" + (i + 1)); // get 40 answers from form
+			String correctAnswser = listcorrectAnswser.get(i).getAnswer();
+			String result = "";
+			if(correctAnswser.equals(studentAnswer)) { // compare answers
+				result = "bingo";
+				score++;
+			} else {
+				result = "wrong";
+			}
+			listeningResults.add(new ListeningResult(studentAnswer, correctAnswser, result));
+		}
+		model.put("listeningResults", listeningResults);
+		model.put("studentResult", score);
+		return "listeningscore";
 	}
 
 	@RequestMapping(value = "writing", method = RequestMethod.GET)

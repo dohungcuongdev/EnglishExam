@@ -11,30 +11,29 @@
 						<h1>IETLS Listening Test</h1>
 						<p class="post_meta fix">
 						<h6></h6>
-						<center>
+						<center>	
 							<h2></h2>
 						</center>
 						<p>${readingTopic}</p>
-
-						<blockquote>Question 1 - 6: Write NO MORE THAN THREE
-							WORDS OR A NUMBER for each answer.</blockquote>
-
-						Destination: (1) <input type="text" name="Question 1" value="">
-						<br> Weather: (2) <input type="text" name="Question 2"
-							value=""> <br> Arrival time: (3) <input type="text"
-							name="Question 1" value=""> <br> Activities Planned
-						See: (4) <input type="text" name="Question 2" value=""> <br>
-						Eat: Catered lunch Attend: (5) <input type="text"
-							name="Question 1" value=""> <br> Return time: (6) <input
-							type="text" name="Question 2" value=""> <br>
-
-
-						<blockquote>Questions 7-10:Write ONE WORD ONLY for each answer.</blockquote>
-						(7) <input type="text" name="Question 7" value=""><br>
-						(8) <input type="text" name="Question 8" value=""><br>
-						(9) <input type="text" name="Question 9" value=""><br>
-						Indonesian <br> (10)<input type="text" name="Question 10"
-							value=""><br> Saudi <br> Other <br>
+						<form action="${pageContext.request.contextPath}/listeningscore.html" id="myform" method="post">
+						
+						
+						<blockquote>Question 1 - 6: Write NO MORE THAN THREE WORDS OR A NUMBER for each answer.</blockquote>
+						
+						Destination: (1) <input type="text" name="Q1" value=""> <br>
+						Weather: (2) <input type="text" name="Q2" value=""> <br>
+						Arrival time: (3) <input type="text" name="Q3" value=""> <br>
+						Activities Planned See: (4) <input type="text" name="Q4" value="">
+						<br> Eat: Catered lunch Attend: (5) <input type="text"
+							name="Q5" value=""> <br> Return time: (6) <input
+							type="text" name="Q6" value=""> <br>
+						<blockquote>Questions 7-10:Write ONE WORD ONLY for
+							each answer.</blockquote>
+						(7) <input type="text" name="Q7" value=""><br> (8) <input
+							type="text" name="Q8" value=""><br> (9) <input
+							type="text" name="Q9" value=""><br> Indonesian <br>
+						(10)<input type="text" name="Q10" value=""><br> Saudi
+						<br> Other <br>
 
 
 						<blockquote>Questions 11-15 Choose the correct
@@ -42,58 +41,58 @@
 
 						<ol>
 							Question 11: The company deals mostly with:
-							<li>A. <input type="radio" name="Question 11" value="A">
-								Big cities.<br></li>
-							<li>B. <input type="radio" name="Question 11" value="B">
+							<li>A. <input type="radio" name="Q11" value="A"> Big
+								cities.<br></li>
+							<li>B. <input type="radio" name="Q11" value="B">
 								Nature holidays.<br></li>
-							<li>C. <input type="radio" name="Question 11" value="C">
+							<li>C. <input type="radio" name="Q11" value="C">
 								Nepal.<br></li> Question 12: The overseas consultants deal
 							mostly with:
 							<ol>
-								<li>A. <input type="radio" name="Question 12" value="A">
+								<li>A. <input type="radio" name="Q12" value="A">
 									Asia<br></li>
-								<li>B. <input type="radio" name="Question 12" value="B">
+								<li>B. <input type="radio" name="Q12" value="B">
 									North America<br></li>
-								<li>C. <input type="radio" name="Question 12" value="C">
+								<li>C. <input type="radio" name="Q12" value="C">
 									Europe<br></li>
 							</ol>
 
 							Question 13: For deserts and gorges, customers should come in
 							the:
 							<ol>
-								<li>A. <input type="radio" name="Question 13" value="A">
+								<li>A. <input type="radio" name="Q13" value="A">
 									Morning.<br></li>
-								<li>B. <input type="radio" name="Question 13" value="B">
+								<li>B. <input type="radio" name="Q13" value="B">
 									Afternoon.<br></li>
-								<li>C. <input type="radio" name="Question 13" value="C">
+								<li>C. <input type="radio" name="Q13" value="C">
 									Night.<br></li>
 							</ol>
 							Question 14: Trips to regional locations are good because:
 							<ol>
-								<li>A. <input type="radio" name="Question 14" value="A">
+								<li>A. <input type="radio" name="Q14" value="A">
 									The buses are comfortable.<br></li>
-								<li>B. <input type="radio" name="Question 14" value="B">
+								<li>B. <input type="radio" name="Q14" value="B">
 									There is storage for suitcases.<br></li>
-								<li>C. <input type="radio" name="Question 14" value="C">
+								<li>C. <input type="radio" name="Q14" value="C">
 									They can be seen quickly.<br></li>
 							</ol>
 							Question 15: SleekLine buses are particularly known for their:
 							<ol>
-								<li>A. <input type="radio" name="Question 15" value="A">
+								<li>A. <input type="radio" name="Q15" value="A">
 									Service.<br></li>
-								<li>B. <input type="radio" name="Question 15" value="B">
+								<li>B. <input type="radio" name="Q15" value="B">
 									Size.<br></li>
-								<li>C. <input type="radio" name="Question 15" value="C">
+								<li>C. <input type="radio" name="Q15" value="C">
 									Comfort.<br></li>
 							</ol>
 
 							<blockquote>Questions 16-20 Identify the rooms in
 								the office plan. Write the correct letter, A-G, next to the
 								questions.</blockquote>
-							<img src="src/main/webapp/resources/images/IP2 L1 Q16-20.png" width="528" height="353"
-								alt="Question 16">
+							<img src="src/main/webapp/resources/images/IP2 L1 Q16-20.png"
+								width="528" height="353" alt="Question 16">
 							<br> Question 16:
-							<select>
+							<select name="Q16">
 								<option value="A">A</option>
 								<option value="B">B</option>
 								<option value="C">C</option>
@@ -103,7 +102,7 @@
 								<option value="G">G</option>
 							</select> Local Tour
 							<br> Question 17:
-							<select>
+							<select name="Q17">
 								<option value="A">A</option>
 								<option value="B">B</option>
 								<option value="C">C</option>
@@ -113,7 +112,7 @@
 								<option value="G">G</option>
 							</select> Interstate Tours
 							<br> Question 18:
-							<select>
+							<select name="Q18">
 								<option value="A">A</option>
 								<option value="B">B</option>
 								<option value="C">C</option>
@@ -123,7 +122,7 @@
 								<option value="G">G</option>
 							</select> International Tours
 							<br> Question 19:
-							<select>
+							<select name="Q19">
 								<option value="A">A</option>
 								<option value="B">B</option>
 								<option value="C">C</option>
@@ -133,7 +132,7 @@
 								<option value="G">G</option>
 							</select> Asian Region
 							<br> Question 20:
-							<select>
+							<select name="Q20">
 								<option value="A">A</option>
 								<option value="B">B</option>
 								<option value="C">C</option>
@@ -157,7 +156,7 @@
 								<tr>
 									<td>Monday</td>
 									<td>Opening Lecture</td>
-									<td>(21)<select>
+									<td>(21)<select name="Q21">
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
@@ -170,7 +169,7 @@
 								</tr>
 								<tr>
 									<td>Tuesday</td>
-									<td>(22)<select>
+									<td>(22)<select name="Q22">
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
@@ -185,7 +184,7 @@
 								<tr>
 									<td>Wednesday</td>
 									<td>X</td>
-									<td>(23)<select>
+									<td>(23)<select name="Q23">
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
@@ -203,7 +202,7 @@
 								<tr>
 									<td>Friday</td>
 									<td>X</td>
-									<td>(24)<select>
+									<td>(24)<select name="Q24">
 											<option value="A">A</option>
 											<option value="B">B</option>
 											<option value="C">C</option>
@@ -256,47 +255,46 @@
 							<img
 								src="${pageContext.request.contextPath}/resources/images/2018-11-27_16-38-35.jpg"
 								<br></br>
-							(25) <input type="text" name="Question 25" value=""><br>
-							(26) <input type="text" name="Question 26" value=""><br>
-							(27) <input type="text" name="Question 27" value=""><br>
-							(28) <input type="text" name="Question 28" value=""><br>
-							(29) <input type="text" name="Question 29" value=""><br>
-							(30) <input type="text" name="Question 30" value=""><br>
+							(25) <input type="text" name="Q25" value=""><br>
+							(26) <input type="text" name="Q26" value=""><br>
+							(27) <input type="text" name="Q27" value=""><br>
+							(28) <input type="text" name="Q28" value=""><br>
+							(29) <input type="text" name="Q29" value=""><br>
+							(30) <input type="text" name="Q30" value=""><br>
 							
 							<blockquote>Questions 31-34: Complete the sentences. <br>
 							Write NO MORE THAN TWO WORDS for each answer.</blockquote>
-							Behavior in parks is controlled by (31) <input type="text" name="Question 31" value=""><br>
-							Insect numbers are reduced by having (32) <input type="text" name="Question 32" value=""><br>
-							Insect numbers are reduced by having (33) <input type="text" name="Question 33" value=""><br>
-							Insect numbers are reduced by having (34) <input type="text" name="Question 34" value=""><br>
+							Behavior in parks is controlled by (31) <input type="text" name="Q31" value=""><br>
+							Insect numbers are reduced by having (32) <input type="text" name="Q32" value=""><br>
+							Insect numbers are reduced by having (33) <input type="text" name="Q33" value=""><br>
+							Insect numbers are reduced by having (34) <input type="text" name="Q34" value=""><br>
 							<blockquote>Questions 35-40: Complete the notes. <br>
 							Write NO MORE THAN TWO WORDS OR A NUMBER for each answer.</blockquote>
 							<table style="width: 100%">
 								<tr>
 									<td>1000 years ago</td>
 									<td>sufficient wilderness<br>
-									large forests: people could (35) <input type="text" name="Question 35" value=""><br>
-									desire to preserve nature began with (36) <input type="text" name="Question 36" value=""></td>
+									large forests: people could (35) <input type="text" name="Q35" value=""><br>
+									desire to preserve nature began with (36) <input type="text" name="Q36" value=""></td>
 								</tr>
 								<tr>
 									<td>Princes Park</td>
-									<td>and originally worth £ (37) <input type="text" name="Question 37" value=""> <br>
+									<td>and originally worth £ (37) <input type="text" name="Q37" value=""> <br>
 									designed by Joseph Paxton <br> 
-									in the middle was a (38) <input type="text" name="Question 38" value="">
+									in the middle was a (38) <input type="text" name="Q38" value="">
 									</td><br>
 									
 								</tr>
 								<tr>
 									<td>Neighborhood Parks</td>
-									<td>now regarded as a (39) <input type="text" name="Question 39" value=""> <br>
+									<td>now regarded as a (39) <input type="text" name="Q39" value=""> <br>
 									satisfy a natural desire <br> 
-									an be famous, e.g. in (40) <input type="text" name="Question 40" value="">
+									an be famous, e.g. in (40) <input type="text" name="Q40" value="">
 									</td>
 								</tr>								
 							</table>
-							
-							<a href="" class="btn">SUBMIT</a>
-							<a href="" class="btn">SCORE</a>
+							</form>
+							<a onclick="document.getElementById('myform').submit();" style="cursor:pointer" class="btn">SCORE</a>
 					</div>
 				</div>
 			</div>
