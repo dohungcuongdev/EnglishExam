@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+    <button type="submit" onclick="location.href = '${pageContext.request.contextPath}/logout.html'">Logout</button>
 	<form:form method="post" commandName="newReading"
 		action="${pageContext.request.contextPath}/addNewReading.html">
 		id:<br>

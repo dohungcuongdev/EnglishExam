@@ -6,6 +6,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import daos.ListeningDAO;
 import daos.ReadingDAO;
 import daos.SpeakingDAO;
 import daos.UserDAO;
@@ -26,7 +29,10 @@ import daos.WritingDAO;
 import helper.Authentication;
 import helper.Logger;
 import models.AppVars;
+import models.ListeningResult;
+import models.Listeninganswer;
 import models.Reading;
+import models.Readinganswer;
 import models.Speaking;
 import models.User;
 import models.Writing;
@@ -41,7 +47,10 @@ public class AppController {
 
 	@Autowired
 	private WritingDAO writingDAO;
-
+	
+	@Autowired
+	private ListeningDAO listeningDAO;
+	
 	@Autowired
 	private SpeakingDAO speakingDAO;
 
@@ -56,11 +65,36 @@ public class AppController {
 		Logger.infor("@RequestMapping_test");
 		return "test";
 	}
+	
+	@RequestMapping(value = "test2", method = RequestMethod.GET)
+	public String test2(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_test2");
+		model.put("studentResult", 0);
+		System.out.println(readingDAO.getReadingAnswer(1));
+		return "test2";
+	}
+	
+	@RequestMapping(value = "computeScore", method = RequestMethod.POST)
+	public String computeScore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_computeScore");
+		
+		List<Readinganswer> correctAnswser = readingDAO.getReadingAnswer(1);
+		int score = 0;
+		for(int i = 0; i < correctAnswser.size(); i++) {
+			if(correctAnswser.get(i).getAnswer().equals(request.getParameter("Q" + (i + 1))))
+				score++;
+		}
+		model.put("studentResult", score);
+		return "test2";
+	}
 
 	// admin
 	@RequestMapping(value = "admin", method = RequestMethod.GET)
 	public String admin(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Logger.infor("@RequestMapping_admin");
+		if (!isAuthenticated(request)) {
+			return "login";
+		}
 		return "admin";
 	}
 
@@ -138,7 +172,7 @@ public class AppController {
 	@RequestMapping(value = "reading/{id}", method = RequestMethod.GET)
 	public String reading(@PathVariable(value = "id") String id, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Logger.infor("@RequestMapping_reading");
+		Logger.infor("@RequestMapping_reading/" + id);
 
 		// do logic
 		Reading reading = readingDAO.getReadingById(id);
@@ -153,6 +187,56 @@ public class AppController {
 		Logger.infor("@RequestMapping_index");
 
 		return "reading";
+	}
+	
+	@RequestMapping(value = "readingscore", method = RequestMethod.POST)
+	public String readingscore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_readingscore");
+		List<String> studentAnswers = new ArrayList<String>(); // list contains 40 students answers
+		List<String> correctAnswsers = new ArrayList<String>(); // list contains 40 correct answers
+		List<String> results = new ArrayList<String>(); // list contains 40 correct answers
+		List<Readinganswer> listcorrectAnswser = readingDAO.getReadingAnswer(1); // get 40 answers from db where reading no = 1
+		int score = 0;
+		for(int i = 0; i < listcorrectAnswser.size(); i++) {
+			String studentAnswer = request.getParameter("Q" + (i + 1)); // get 40 answers from form
+			String correctAnswser = listcorrectAnswser.get(i).getAnswer();
+			studentAnswers.add(studentAnswer);
+			correctAnswsers.add(correctAnswser);
+			if(correctAnswser.equals(studentAnswer)) { // compare answers
+				results.add("bingo");
+				score++;
+			} else {
+				results.add("vinh oc cho");
+			}
+		}
+		request.setAttribute("studentAnswers", studentAnswers);
+		request.setAttribute("correctAnswsers", correctAnswsers);
+		request.setAttribute("results", results);
+		model.put("studentResult", score);
+		return "readingscore";
+	}
+	
+	@RequestMapping(value = "listeningscore", method = RequestMethod.POST)
+	public String listeningscore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_listeningscore");
+		List<ListeningResult> listeningResults = new ArrayList<ListeningResult>(); // list contains 40 listening result
+		List<Listeninganswer> listcorrectAnswser = listeningDAO.getListeningAnswer(1); // get 40 answers from db where listening no = 1
+		int score = 0;
+		for(int i = 0; i < listcorrectAnswser.size(); i++) {
+			String studentAnswer = request.getParameter("Q" + (i + 1)); // get 40 answers from form
+			String correctAnswser = listcorrectAnswser.get(i).getAnswer();
+			String result = "";
+			if(correctAnswser.equals(studentAnswer)) { // compare answers
+				result = "bingo";
+				score++;
+			} else {
+				result = "wrong";
+			}
+			listeningResults.add(new ListeningResult(studentAnswer, correctAnswser, result));
+		}
+		model.put("listeningResults", listeningResults);
+		model.put("studentResult", score);
+		return "listeningscore";
 	}
 
 	@RequestMapping(value = "writing", method = RequestMethod.GET)
@@ -207,9 +291,25 @@ public class AppController {
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		if (isAuthenticated(request))
-			return index(request, response, model);
+			return admin(request, response, model);
 		Logger.infor("@RequestMapping_login");
 		return "login";
+	}
+	
+	// logout
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_logout");
+		request.getSession().setAttribute("username", null);
+		return "index";
+	}
+	
+	private boolean isAuthenticated(HttpServletRequest request) {
+		Object username = request.getSession().getAttribute("username");
+		if(username == null)
+			return false;
+		User user = userService.getUserByUserName(username.toString());
+		return user != null && user.getUserName() != null;
 	}
 
 	// check login
@@ -223,21 +323,19 @@ public class AppController {
 		if (AppVars.user != null && username.equals(AppVars.user.getUserName())
 				&& password.equals(Authentication.getDecryptPassword(AppVars.user.getPassword()))) {
 			request.getSession().setAttribute("username", username);
-			request.getSession().setMaxInactiveInterval(24 * 60 * 60);
-			Cookie cookieUN = new Cookie("username", username);
-			Cookie cookiePW = new Cookie("password", Authentication.getEncryptPassword(password));
-			cookieUN.setMaxAge(3600 * 24 * 3);
-			cookiePW.setMaxAge(3600 * 24 * 3);
-			response.addCookie(cookieUN);
-			response.addCookie(cookiePW);
-			return index(request, response, model);
+			request.getSession().setMaxInactiveInterval(30 * 60);
+			// For remember me feature
+			//Cookie cookieUN = new Cookie("username", username);
+			//Cookie cookiePW = new Cookie("password", Authentication.getEncryptPassword(password));
+			//cookieUN.setMaxAge(3600 * 24 * 3);
+			//cookiePW.setMaxAge(3600 * 24 * 3);
+			//response.addCookie(cookieUN);
+			//response.addCookie(cookiePW);
+			return admin(request, response, model);
 		}
 		model.put("checkLogin", "Invalid username or password!");
 		return "login";
 	}
 
-	private boolean isAuthenticated(HttpServletRequest request) {
-		return false;
-	}
 
 }

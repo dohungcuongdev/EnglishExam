@@ -1,5 +1,7 @@
 package daos.impl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import daos.SpeakingDAO;
+import models.Listeninganswer;
+import models.Readinganswer;
 import models.Speaking;
 
 @Repository
@@ -30,6 +34,6 @@ public class SpeakingDAOImpl implements SpeakingDAO {
     @Override
     public void editSpeakingInfor(Speaking speaking) {
 		sessionFactory.getCurrentSession().saveOrUpdate(speaking);
-    }	
+    }
 
 }
