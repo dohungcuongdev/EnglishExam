@@ -92,6 +92,9 @@ public class AppController {
 	@RequestMapping(value = "admin", method = RequestMethod.GET)
 	public String admin(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Logger.infor("@RequestMapping_admin");
+		if (!isAuthenticated(request)) {
+			return "login";
+		}
 		return "admin";
 	}
 
@@ -212,6 +215,7 @@ public class AppController {
 		model.put("studentResult", score);
 		return "readingscore";
 	}
+	
 	@RequestMapping(value = "listeningscore", method = RequestMethod.POST)
 	public String listeningscore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Logger.infor("@RequestMapping_listeningscore");
@@ -287,9 +291,25 @@ public class AppController {
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		if (isAuthenticated(request))
-			return index(request, response, model);
+			return admin(request, response, model);
 		Logger.infor("@RequestMapping_login");
 		return "login";
+	}
+	
+	// logout
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_logout");
+		request.getSession().setAttribute("username", null);
+		return "index";
+	}
+	
+	private boolean isAuthenticated(HttpServletRequest request) {
+		Object username = request.getSession().getAttribute("username");
+		if(username == null)
+			return false;
+		User user = userService.getUserByUserName(username.toString());
+		return user != null && user.getUserName() != null;
 	}
 
 	// check login
@@ -303,21 +323,19 @@ public class AppController {
 		if (AppVars.user != null && username.equals(AppVars.user.getUserName())
 				&& password.equals(Authentication.getDecryptPassword(AppVars.user.getPassword()))) {
 			request.getSession().setAttribute("username", username);
-			request.getSession().setMaxInactiveInterval(24 * 60 * 60);
-			Cookie cookieUN = new Cookie("username", username);
-			Cookie cookiePW = new Cookie("password", Authentication.getEncryptPassword(password));
-			cookieUN.setMaxAge(3600 * 24 * 3);
-			cookiePW.setMaxAge(3600 * 24 * 3);
-			response.addCookie(cookieUN);
-			response.addCookie(cookiePW);
-			return index(request, response, model);
+			request.getSession().setMaxInactiveInterval(30 * 60);
+			// For remember me feature
+			//Cookie cookieUN = new Cookie("username", username);
+			//Cookie cookiePW = new Cookie("password", Authentication.getEncryptPassword(password));
+			//cookieUN.setMaxAge(3600 * 24 * 3);
+			//cookiePW.setMaxAge(3600 * 24 * 3);
+			//response.addCookie(cookieUN);
+			//response.addCookie(cookiePW);
+			return admin(request, response, model);
 		}
 		model.put("checkLogin", "Invalid username or password!");
 		return "login";
 	}
 
-	private boolean isAuthenticated(HttpServletRequest request) {
-		return false;
-	}
 
 }
