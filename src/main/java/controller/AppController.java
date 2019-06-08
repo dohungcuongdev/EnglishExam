@@ -6,6 +6,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,7 @@ import helper.Authentication;
 import helper.Logger;
 import models.AppVars;
 import models.Reading;
+import models.Readinganswer;
 import models.Speaking;
 import models.User;
 import models.Writing;
@@ -55,6 +58,28 @@ public class AppController {
 	public String test(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Logger.infor("@RequestMapping_test");
 		return "test";
+	}
+	
+	@RequestMapping(value = "test2", method = RequestMethod.GET)
+	public String test2(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_test2");
+		model.put("studentResult", 0);
+		System.out.println(readingDAO.getReadingAnswer(1));
+		return "test2";
+	}
+	
+	@RequestMapping(value = "computeScore", method = RequestMethod.POST)
+	public String computeScore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_computeScore");
+		
+		List<Readinganswer> correctAnswser = readingDAO.getReadingAnswer(1);
+		int score = 0;
+		for(int i = 0; i < correctAnswser.size(); i++) {
+			if(correctAnswser.get(i).getAnswer().equals(request.getParameter("Q" + (i + 1))))
+				score++;
+		}
+		model.put("studentResult", score);
+		return "test2";
 	}
 
 	// admin
@@ -138,7 +163,7 @@ public class AppController {
 	@RequestMapping(value = "reading/{id}", method = RequestMethod.GET)
 	public String reading(@PathVariable(value = "id") String id, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		Logger.infor("@RequestMapping_reading");
+		Logger.infor("@RequestMapping_reading/" + id);
 
 		// do logic
 		Reading reading = readingDAO.getReadingById(id);
@@ -153,6 +178,33 @@ public class AppController {
 		Logger.infor("@RequestMapping_index");
 
 		return "reading";
+	}
+	
+	@RequestMapping(value = "readingscore", method = RequestMethod.POST)
+	public String readingscore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_readingscore");
+		List<String> studentAnswers = new ArrayList<String>(); // list contains 40 students answers
+		List<String> correctAnswsers = new ArrayList<String>(); // list contains 40 correct answers
+		List<String> results = new ArrayList<String>(); // list contains 40 correct answers
+		List<Readinganswer> listcorrectAnswser = readingDAO.getReadingAnswer(1); // get 40 answers from db where reading no = 1
+		int score = 0;
+		for(int i = 0; i < listcorrectAnswser.size(); i++) {
+			String studentAnswer = request.getParameter("Q" + (i + 1)); // get 40 answers from form
+			String correctAnswser = listcorrectAnswser.get(i).getAnswer();
+			studentAnswers.add(studentAnswer);
+			correctAnswsers.add(correctAnswser);
+			if(correctAnswser.equals(studentAnswer)) { // compare answers
+				results.add("bingo");
+				score++;
+			} else {
+				results.add("vinh oc cho");
+			}
+		}
+		request.setAttribute("studentAnswers", studentAnswers);
+		request.setAttribute("correctAnswsers", correctAnswsers);
+		request.setAttribute("results", results);
+		model.put("studentResult", score);
+		return "readingscore";
 	}
 
 	@RequestMapping(value = "writing", method = RequestMethod.GET)

@@ -6,11 +6,9 @@
 	<div class="fix home_main_content">
 		<div class="main_content floatleft">
 			<div class="fix main_content_container">
-
-
-
 				<div class="fix single_content_latest_post floatleft">
 					<div class="single_page_content">
+					<form action="${pageContext.request.contextPath}/readingscore.html" id="myform" method="post">
 						<h1>Speaking</h1>
 						<p class="post_meta fix">
 						<h1>${speakingTopic}</h1>
@@ -115,31 +113,36 @@
 								</tr>
 							</table>
 						</blockquote>
-						(1) <select>
+						(1) <select path="Q1" name="Q1">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 						</select> Aries pointed out that children did different types of work to
-						adults during the Middle Ages.<br> (2) <select>
+						adults during the Middle Ages.<br> 
+						(2) <select path="Q2" name="Q2">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 						</select> Working children during the Middle Ages were generally unloved.<br>
-						(3) <select>
+						(3) <select path="Q3" name="Q3">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 						</select> Some scientists thought that overwork might damage the health of
-						young children.<br> (4) <select>
+						young children.<br> 
+						(4) <select path="Q4" name="Q4">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 						</select> The rise of trade unions majorly contributed to the protection of
-						children from exploitation in the 19th century.<br> (5) <select>
+						children from exploitation in the 19th century.<br> 
+						(5) <select path="Q5" name="Q5">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 						</select> Through the aid of half-time schools, most children went to
-						school in the mid-19th century.<br> (6) <select>
+						school in the mid-19th century.<br> 
+						(6) <select path="Q6" name="Q6">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 						</select> In the 20th century, almost all children needed to go to school
-						with a full-time schedule.<br> (7) <select>
+						with a full-time schedule.<br> 
+						(7) <select path="Q7" name="Q7">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 						</select> Nowadays, children’s needs are much differentiated and
@@ -152,22 +155,22 @@
 							Write your answers in boxes 8-13 on your answer sheet.
 						</blockquote>
 						What had not become a hot topic until the French historian
-						Philippe Aries' book caused great attention?<br> (8)<input
-							type="text" name="Question 8" value=""><br>
+						Philippe Aries' book caused great attention?<br> (8)<input path="Q8" name="Q8"
+							type="text" value=""><br>
 						According to Aries, what was the typical image of children in
-						Western Europe during the Middle Ages?<br> (9)<input
-							type="text" name="Question 9" value=""><br> What
+						Western Europe during the Middle Ages?<br> (9)<input path="Q9" name="Q9"
+							type="text" value=""><br> What
 						historical event generated the need for a large number of children
 						to work for a long time in the 18th and 19th centuries?<br>
-						(10)<input type="text" name="Question 10" value=""><br>
+						(10)<input path="Q10" name="Q10" type="text" value=""><br>
 						What bill was enacted to protect children from exploitation in
-						Britain in the 1800s?<br> (11)<input type="text"
-							name="Question 11" value=""><br> Which activities
+						Britain in the 1800s?<br> (11)<input path="Q11" name="Q11" type="text"
+							 value=""><br> Which activities
 						were becoming regarded as preferable for almost all children in
-						the 19th century?<br> (12)<input type="text"
-							name="Question 12" value=""><br> In what place did
+						the 19th century?<br> (12)<input type="text" path="Q12" name="Q12"
+							" value=""><br> In what place did
 						children spend the majority of time during their day in school?<br>
-						(13)<input type="text" name="Question 13" value=""><br>
+						(13)<input path="Q13" name="Q13" type="text" value=""><br>
 						<h2>Passage 2</h2>
 						<center>
 							<h2>Bestcom - Considerate Computing</h2>
@@ -278,49 +281,42 @@
 								</tr>
 							</table>
 						</blockquote>
-
-						<ol>
-							<li>A. <input type="radio" name="gender" value="male">
-								Male<br></li>
-							<li>B. <input type="radio" name="gender" value="male">
-								Male<br></li>
-							<li>C. <input type="radio" name="gender" value="male">
-								Male<br></li>
-							<li>D. <input type="radio" name="gender" value="male">
-								Male<br></li>
-						</ol>
-
-						<blockquote>
-							Questions 1:Do the following statements agree with the
-							information given in Reading Passage 1? <br> In boxes 1-7 on
-							your answer sheet, write
-						</blockquote>
-						(14)<select>
+						(14)<select path="Q14" name="Q14">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 							<option value="NOT GIVEN">NOT GIVEN</option>
 						</select>According to Ted Selker, human reproduction has been disturbed
-						throughout history.<br> (15)<select>
+						throughout history.<br> 
+						(15)<select path="Q15" name="Q15">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 							<option value="NOT GIVEN">NOT GIVEN</option>
 						</select> If people are interrupted by calls or e-mails, they usually put
-						up with it. <br> (16)<select>
+						up with it. <br> 
+						(16)<select path="Q16" name="Q16">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 							<option value="NOT GIVEN">NOT GIVEN</option>
 						</select>Microsoft is now investigating a software which is compatible with
-						ordinary offices.<br> (17)<select>
+						ordinary offices.<br> 
+						(17)<select path="Q17" name="Q17">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 							<option value="NOT GIVEN">NOT GIVEN</option>
 						</select>People usually have a misperception about whether they are busy or
-						not. <br> (18)<select>
+						not. <br> 
+						(18)<select path="Q18" name="Q18">
 							<option value="TRUE">TRUE</option>
 							<option value="FALSE">FALSE</option>
 							<option value="NOT GIVEN">NOT GIVEN</option>
 						</select>Experts in Carnegie Mellon University conducted a research
 						observing all occupations of IBM.<br>
+						(19)<select path="Q11" name="Q19">
+							<option value="TRUE">TRUE</option>
+							<option value="FALSE">FALSE</option>
+							<option value="NOT GIVEN">NOT GIVEN</option>
+						</select>Current phone and computer systems have shortcut keys 
+						for people receiving information immediately.<br>
 
 
 						<blockquote>
@@ -329,20 +325,20 @@
 							your answers in boxes 20-26 on your answer sheet.
 						</blockquote>
 						Bestcom system carries out further analysis in order to find (20)
-						<input type="text" name="Question 20" value="">about what
-						users are doing. <br> Check the (21)<input type="text"
-							name="Question 21" value="">about what between the caller
+						<input path="Q20" name="Q20" type="text" name="Question 20" value="">about what
+						users are doing. <br> Check the (21)<input path="Q21" name="Q21"type="text"
+							 value="">about what between the caller
 						and the user, whether the caller has contact information of the
 						user, such as their family, friends or collegues. <br> If
-						callers are not in directory, a(n) (22)<input type="text"
-							name="Question 22" value=""> will show up on their
+						callers are not in directory, a(n) (22)<input path="Q22" name="Q22"type="text"
+							 value=""> will show up on their
 						screen, saying the user is not available at moment. The system
-						will (23)<input type="text" name="Question 23" value=""> a
+						will (23)<input path="Q23" name="Q23" type="text" value=""> a
 						suitable time for both, or callers can choose to leave a(n) (24)<input
-							type="text" name="Question 24" value=""> to users.
+							path="Q24" name="Q24" type="text" value=""> to users.
 						Bestcom will provide a solution by transferring your call to the
-						user’s (25) <input type="text" name="Question 25" value="">if
-						there is no (26)<input type="text" name="Question 26" value="">
+						user’s (25) <input path="Q25" name="Q25" type="text" value="">if
+						there is no (26)<input path="Q26" name="Q26" type="text" value="">
 						in his or her schedule.<br>
 						<h2>Passage 3</h2>
 						<center>
@@ -471,7 +467,7 @@
 								<td>A range of low-tech methods</td>
 							</tr>
 						</table>
-						(27)<select>
+						(27)<select path="Q27" name="Q27">
 							<option value="i">i</option>
 							<option value="ii">ii</option>
 							<option value="iii">iii</option>
@@ -480,7 +476,8 @@
 							<option value="vi">vi</option>
 							<option value="vii">vii</option>
 							<option value="viii">viii</option>
-						</select> Paragraph A<br> (28)<select>
+						</select> Paragraph A<br> 
+						(28)<select path="Q28" name="Q28">
 							<option value="i">i</option>
 							<option value="ii">ii</option>
 							<option value="iii">iii</option>
@@ -489,7 +486,8 @@
 							<option value="vi">vi</option>
 							<option value="vii">vii</option>
 							<option value="viii">viii</option>
-						</select> Paragraph B<br> (29)<select>
+						</select> Paragraph B<br> 
+						(29)<select path="Q29" name="Q29">
 							<option value="i">i</option>
 							<option value="ii">ii</option>
 							<option value="iii">iii</option>
@@ -498,7 +496,8 @@
 							<option value="vi">vi</option>
 							<option value="vii">vii</option>
 							<option value="viii">viii</option>
-						</select> Paragraph C<br> (30)<select>
+						</select> Paragraph C<br> 
+						(30)<select path="Q30" name="Q30">
 							<option value="i">i</option>
 							<option value="ii">ii</option>
 							<option value="iii">iii</option>
@@ -507,7 +506,8 @@
 							<option value="vi">vi</option>
 							<option value="vii">vii</option>
 							<option value="viii">viii</option>
-						</select> Paragraph D<br> (31)<select>
+						</select> Paragraph D<br> 
+						(31)<select path="Q31" name="Q31">
 							<option value="i">i</option>
 							<option value="ii">ii</option>
 							<option value="iii">iii</option>
@@ -516,7 +516,8 @@
 							<option value="vi">vi</option>
 							<option value="vii">vii</option>
 							<option value="viii">viii</option>
-						</select> Paragraph E<br> (32)<select>
+						</select> Paragraph E<br> 
+						(32)<select path="Q32" name="Q32">
 							<option value="i">i</option>
 							<option value="ii">ii</option>
 							<option value="iii">iii</option>
@@ -525,7 +526,8 @@
 							<option value="vi">vi</option>
 							<option value="vii">vii</option>
 							<option value="viii">viii</option>
-						</select> Paragraph F<br> (33)<select>
+						</select> Paragraph F<br> 
+						(33)<select path="Q33" name="Q33">
 							<option value="i">i</option>
 							<option value="ii">ii</option>
 							<option value="iii">iii</option>
@@ -543,21 +545,21 @@
 							WORD ONLY from the passage for each answer.<br> Write your
 							answers in boxes 34-38 on your answer sheet.
 						</blockquote>
-						Hurricanes originate as groups of (34) <input type="text"
-							name="Question 34" value="">over the tropical oceans.
+						Hurricanes originate as groups of (34) <input path="Q34" name="Q34"type="text"
+							 value="">over the tropical oceans.
 						Low-latitude seas continuously provide heat and moisture to the
 						atmosphere, producing warm, humid air above the sea surface. When
 						this air rises, the water vapour in it condenses to form clouds
-						and precipitation. (35)<input type="text" name="Question 35"
+						and precipitation. (35)<input path="Q35" name="Q35" type="text"
 							value=""> releases heat—the solar heat it took to
 						evaporate the water at the ocean surface. This so-called latent
-						(36)<input type="text" name="Question 36" value=""> of
+						(36)<input path="Q36" name="Q36" type="text" value=""> of
 						condensation makes the air more buoyant, causing it to ascend
 						still higher in a self-reinforcing feedback process. Eventually,
 						the tropical depression begins to organise and strengthen, forming
-						the familiar (37)<input type="text" name="Question 37" value="">
+						the familiar (37)<input path="Q37" name="Q37" type="text" value="">
 						—the calm central hub around which a hurricane spins. On passing
-						over (38)<input type="text" name="Question 38" value=""> ,
+						over (38)<input path="Q38" name="Q38" type="text" value=""> ,
 						the hurrican's sustaining source of warm water is cut off, which
 						leads to the storm's rapid weakening.
 						<blockquote>Questions 39-40:Choose the correct letter, A, B, C or D. <br>
@@ -565,23 +567,24 @@
 						</blockquote>
 						
 						(39) What encouraged the writer to restart researching hurricane control?<br>
-						<input type="checkbox" name="Question 39" value="Question 39"> the huge damage hurricane trigger<br>
-						<input type="checkbox" name="Question 39" value="Question 39"> the developments in computer technologies<br>
-						<input type="checkbox" name="Question 39" value="Question 39">the requirement of some local people<br>
-						<input type="checkbox" name="Question 39" value="Question 39"> the chaos theory learnt as a student<br>
+						<input path="Q39" name="Q39" type="checkbox" value="Question 39"> the huge damage hurricane trigger<br>
+						<input path="Q39" name="Q39" type="checkbox" value="Question 39"> the developments in computer technologies<br>
+						<input path="Q39" name="Q39" type="checkbox" value="Question 39">the requirement of some local people<br>
+						<input path="Q39" name="Q39" type="checkbox" value="Question 39"> the chaos theory learnt as a student<br>
 						(40) What was the writer’s reaction after their first experiment?<br>
-						<input type="checkbox" name="Question 39" value="Question 40">surprised that their intervention had not achieved a lot<br>
-						<input type="checkbox" name="Question 39" value="Question 40">ecstatic with the achievement the first experiment had<br>
-						<input type="checkbox" name="Question 39" value="Question 40">surprised that their intervention had the intended effect<br>
-						<input type="checkbox" name="Question 39" value="Question 40">regretful about the impending success<br>
+						<input path="Q40" name="Q40" type="checkbox"  value="Question 40">surprised that their intervention had not achieved a lot<br>
+						<input path="Q40" name="Q40" type="checkbox"  value="Question 40">ecstatic with the achievement the first experiment had<br>
+						<input path="Q40" name="Q40" type="checkbox"  value="Question 40">surprised that their intervention had the intended effect<br>
+						<input path="Q40" name="Q40" type="checkbox"  value="Question 40">regretful about the impending success<br>
 						
 						
 						
-						<a href="" class="btn">SUBMIT</a> <a href="" class="btn">SCORE</a>
+						<a onclick="document.getElementById('myform').submit();" style="cursor:pointer" class="btn">SCORE</a>
 					</div>
 				</div>
 			</div>
 		</div>
+		</form>
 
 		<!-- Clean template By wpfreeware.com -->
 
