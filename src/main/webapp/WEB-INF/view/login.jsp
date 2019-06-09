@@ -44,7 +44,7 @@ body {
 	                <input type="password" placeholder="Enter Password" name="password" required>
 	                <button type="submit">Login</button>
 	                <center><b style="color: #f44336">${checkLogin}</b></center><br>
-	                <input type="checkbox" checked="checked"> Remember me
+	                <input type="checkbox" checked="checked" name="rememberMe"> Remember me
 	            </div>
 	            <div class="container" style="background-color:#f1f1f1">
 	                <button type="button" onclick="document.getElementById('id01').style.display = 'none'" class="cancelbtn">Cancel</button>

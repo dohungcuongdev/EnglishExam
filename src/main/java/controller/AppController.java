@@ -6,7 +6,11 @@
 package controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -47,10 +51,10 @@ public class AppController {
 
 	@Autowired
 	private WritingDAO writingDAO;
-	
+
 	@Autowired
 	private ListeningDAO listeningDAO;
-	
+
 	@Autowired
 	private SpeakingDAO speakingDAO;
 
@@ -65,7 +69,7 @@ public class AppController {
 		Logger.infor("@RequestMapping_test");
 		return "test";
 	}
-	
+
 	@RequestMapping(value = "test2", method = RequestMethod.GET)
 	public String test2(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Logger.infor("@RequestMapping_test2");
@@ -73,15 +77,15 @@ public class AppController {
 		System.out.println(readingDAO.getReadingAnswer(1));
 		return "test2";
 	}
-	
+
 	@RequestMapping(value = "computeScore", method = RequestMethod.POST)
 	public String computeScore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Logger.infor("@RequestMapping_computeScore");
-		
+
 		List<Readinganswer> correctAnswser = readingDAO.getReadingAnswer(1);
 		int score = 0;
-		for(int i = 0; i < correctAnswser.size(); i++) {
-			if(correctAnswser.get(i).getAnswer().equals(request.getParameter("Q" + (i + 1))))
+		for (int i = 0; i < correctAnswser.size(); i++) {
+			if (correctAnswser.get(i).getAnswer().equals(request.getParameter("Q" + (i + 1))))
 				score++;
 		}
 		model.put("studentResult", score);
@@ -188,21 +192,22 @@ public class AppController {
 
 		return "reading";
 	}
-	
+
 	@RequestMapping(value = "readingscore", method = RequestMethod.POST)
 	public String readingscore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Logger.infor("@RequestMapping_readingscore");
 		List<String> studentAnswers = new ArrayList<String>(); // list contains 40 students answers
 		List<String> correctAnswsers = new ArrayList<String>(); // list contains 40 correct answers
 		List<String> results = new ArrayList<String>(); // list contains 40 correct answers
-		List<Readinganswer> listcorrectAnswser = readingDAO.getReadingAnswer(1); // get 40 answers from db where reading no = 1
+		List<Readinganswer> listcorrectAnswser = readingDAO.getReadingAnswer(1); // get 40 answers from db where reading
+																					// no = 1
 		int score = 0;
-		for(int i = 0; i < listcorrectAnswser.size(); i++) {
+		for (int i = 0; i < listcorrectAnswser.size(); i++) {
 			String studentAnswer = request.getParameter("Q" + (i + 1)); // get 40 answers from form
 			String correctAnswser = listcorrectAnswser.get(i).getAnswer();
 			studentAnswers.add(studentAnswer);
 			correctAnswsers.add(correctAnswser);
-			if(correctAnswser.equals(studentAnswer)) { // compare answers
+			if (correctAnswser.equals(studentAnswer)) { // compare answers
 				results.add("bingo");
 				score++;
 			} else {
@@ -215,18 +220,19 @@ public class AppController {
 		model.put("studentResult", score);
 		return "readingscore";
 	}
-	
+
 	@RequestMapping(value = "listeningscore", method = RequestMethod.POST)
 	public String listeningscore(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Logger.infor("@RequestMapping_listeningscore");
 		List<ListeningResult> listeningResults = new ArrayList<ListeningResult>(); // list contains 40 listening result
-		List<Listeninganswer> listcorrectAnswser = listeningDAO.getListeningAnswer(1); // get 40 answers from db where listening no = 1
+		List<Listeninganswer> listcorrectAnswser = listeningDAO.getListeningAnswer(1); // get 40 answers from db where
+																						// listening no = 1
 		int score = 0;
-		for(int i = 0; i < listcorrectAnswser.size(); i++) {
+		for (int i = 0; i < listcorrectAnswser.size(); i++) {
 			String studentAnswer = request.getParameter("Q" + (i + 1)); // get 40 answers from form
 			String correctAnswser = listcorrectAnswser.get(i).getAnswer();
 			String result = "";
-			if(correctAnswser.equals(studentAnswer)) { // compare answers
+			if (correctAnswser.equals(studentAnswer)) { // compare answers
 				result = "bingo";
 				score++;
 			} else {
@@ -290,23 +296,35 @@ public class AppController {
 	// login
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		Logger.infor("@RequestMapping_login");
+		if (isStillRemember(request))
+			return admin(request, response, model);
 		if (isAuthenticated(request))
 			return admin(request, response, model);
-		Logger.infor("@RequestMapping_login");
+		/*
+		 * if(isStillRemember(request)) { String[] rememberData = rememberData(request);
+		 * model.put("loginbean", new User(rememberData[0], rememberData[1])); }
+		 */
 		return "login";
 	}
-	
+
 	// logout
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		Logger.infor("@RequestMapping_logout");
 		request.getSession().setAttribute("username", null);
+		Cookie cookieUN = new Cookie("username", null);
+		cookieUN.setMaxAge(0);
+		Cookie cookiePW = new Cookie("passwordEncrypted", null);
+		cookiePW.setMaxAge(0);
+		response.addCookie(cookieUN);
+		response.addCookie(cookiePW);
 		return "index";
 	}
-	
+
 	private boolean isAuthenticated(HttpServletRequest request) {
 		Object username = request.getSession().getAttribute("username");
-		if(username == null)
+		if (username == null)
 			return false;
 		User user = userService.getUserByUserName(username.toString());
 		return user != null && user.getUserName() != null;
@@ -320,22 +338,70 @@ public class AppController {
 		String username = loginbean.getUserName();
 		String password = loginbean.getPassword();
 		AppVars.user = userService.getUserByUserName(username);
-		if (AppVars.user != null && username.equals(AppVars.user.getUserName())
-				&& password.equals(Authentication.getDecryptPassword(AppVars.user.getPassword()))) {
+		String passwordDecrypted = Authentication.getDecryptPassword(AppVars.user.getPassword());
+		if (AppVars.user != null && username.equals(AppVars.user.getUserName()) && password.equals(passwordDecrypted)) {
 			request.getSession().setAttribute("username", username);
 			request.getSession().setMaxInactiveInterval(30 * 60);
 			// For remember me feature
-			//Cookie cookieUN = new Cookie("username", username);
-			//Cookie cookiePW = new Cookie("password", Authentication.getEncryptPassword(password));
-			//cookieUN.setMaxAge(3600 * 24 * 3);
-			//cookiePW.setMaxAge(3600 * 24 * 3);
-			//response.addCookie(cookieUN);
-			//response.addCookie(cookiePW);
+			checkRememberMe(request, response, username, AppVars.user.getPassword());
 			return admin(request, response, model);
 		}
 		model.put("checkLogin", "Invalid username or password!");
 		return "login";
 	}
 
+	private void checkRememberMe(HttpServletRequest request, HttpServletResponse response, String username,
+			String passwordEncrypted) {
+		Object rememberMe = request.getParameter("rememberMe");
+		if (rememberMe != null && rememberMe.equals("on")) {
+			// fix An invalid character [32] was present in the Cookie value bug
+			/*
+			 * Cookie cookieUN = new Cookie("username", username); Cookie cookiePW = new
+			 * Cookie("passwordEncrypted", passwordEncrypted); cookieUN.setMaxAge(3600 * 24
+			 * * 3); cookiePW.setMaxAge(3600 * 24 * 3); response.addCookie(cookieUN);
+			 * response.addCookie(cookiePW);
+			 */
+			try {
+				Cookie cookieUN = new Cookie("username", URLEncoder.encode(username, "UTF-8"));
+				Cookie cookiePW = new Cookie("passwordEncrypted", URLEncoder.encode(passwordEncrypted, "UTF-8"));
+				cookieUN.setMaxAge(3600 * 24 * 3);
+				cookiePW.setMaxAge(3600 * 24 * 3);
+				response.addCookie(cookieUN);
+				response.addCookie(cookiePW);
+			} catch (UnsupportedEncodingException e) {
+				Logger.infor(e);
+			}
+		}
+	}
 
+	private boolean isStillRemember(HttpServletRequest request) {
+		return rememberData(request) != null;
+	}
+
+	private String[] rememberData(HttpServletRequest request) {
+		try {
+			String cookieUN = getCookieValue(request, "username");
+			String cookiePW = getCookieValue(request, "passwordEncrypted");
+			if(cookieUN == null || cookiePW == null) {
+				return null;
+			}
+			String username = URLDecoder.decode(cookieUN, "UTF-8");
+			String passwordEncrypted = URLDecoder.decode(cookiePW, "UTF-8");
+			AppVars.user = userService.getUserByUserName(username);
+			if (AppVars.user != null && username.equals(AppVars.user.getUserName())
+					&& passwordEncrypted.equals(AppVars.user.getPassword())) {
+				request.getSession().setAttribute("username", username);
+				request.getSession().setMaxInactiveInterval(30 * 60);
+				return new String[] { username, Authentication.getDecryptPassword(AppVars.user.getPassword()) };
+			}
+		} catch (UnsupportedEncodingException e) {
+			Logger.infor(e);
+		}
+		return null;
+	}
+
+	private String getCookieValue(HttpServletRequest req, String cookieName) {
+		return Arrays.stream(req.getCookies()).filter(c -> c.getName().equals(cookieName)).findFirst()
+				.map(Cookie::getValue).orElse(null);
+	}
 }

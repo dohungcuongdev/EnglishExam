@@ -8,7 +8,7 @@
 							<span class="site_date">06 Dec 2010 &#9830;</span>
 							<nav>
 								<ul id="nav">
-									<li><a href="${pageContext.request.contextPath}/login.html">Login</a></li>
+									<li><a href="${pageContext.request.contextPath}/login.html">Admin</a></li>
 								</ul>
 							</nav>
 						</div>
